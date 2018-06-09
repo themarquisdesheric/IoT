@@ -1,14 +1,20 @@
+let BTN = NodeMCU.D3;
+let LED = NodeMCU.D2;
 let isOn = false;
-const interval = 500; // 500 milliseconds = 0.5 seconds
+let options = {
+  repeat: true,
+  edge: 'rising',
+  debounce: 50
+}
 
-/**
- * The `main` function gets executed when the board is initialized.
- * Development: npm run dev
- * Production: npm run deploy
- */
 function main() {
-    setInterval(() => {
-        isOn = !isOn; // Flips the state on or off
-        digitalWrite(NodeMCU.D2, isOn); // D2 is the blue LED on the ESP8266 boards
-    }, interval);
+  pinMode(BTN, 'input');
+  setWatch(function(e) {
+    console.log(isOn);
+    isOn = !isOn;
+  }, BTN, options);
+  
+  setInterval(function() {
+    digitalWrite(LED, isOn);
+  }, 50);
 }
