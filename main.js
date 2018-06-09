@@ -28,11 +28,17 @@ function handler(e) {
         });
     });
 }
+
+function getRandom() {
+    return Math.round(Math.random());
+}
   
 function changeLED(color) {
-    digitalWrite(LEDS.RED, false);
-    digitalWrite(LEDS.GREEN, false);
-    digitalWrite(LEDS.BLUE, false);
+    setInterval(() => {
+        Object.keys(LEDS).forEach(led => 
+            digitalWrite(LEDS[led], Boolean(getRandom()))
+        );
+    }, 500);
     
     if (color) digitalWrite(LEDS[color], true);
 }
